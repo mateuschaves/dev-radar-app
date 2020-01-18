@@ -6,9 +6,25 @@ import Geolocation from '@react-native-community/geolocation';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
+import api from '~/services/api';
+
 export default function Main({ navigation }) {
 
   const [currentRegion, setCurrentRegion] = useState(null);
+  const [devs, setDevs] = useState([]);
+  const [techs, setTechs] = useState('');
+
+  async function loadDevs() {
+    const { latitude, longitude } = currentRegion;
+    const response = await api.get('/search', {
+      params: {
+        latitude,
+        longitude,
+        techs
+      }
+    });
+    setDevs(response.data || []);
+  }
 
   async function requestCameraPermission() {
     try {
@@ -33,6 +49,10 @@ export default function Main({ navigation }) {
     } catch (err) {
       return false;
     }
+  }
+
+  function handleRegionChanged(region) {
+    setCurrentRegion(region);
   }
 
   useEffect(() => {
@@ -62,23 +82,31 @@ export default function Main({ navigation }) {
       <MapView
         style={styles.map}
         initialRegion={currentRegion}
+        onRegionChangeComplete={handleRegionChanged}
       >
-        {currentRegion &&
-          <Marker coordinate={currentRegion}>
-            <Image style={styles.avatar} source={{ uri: 'https://avatars2.githubusercontent.com/u/34848657?s=460&v=4' }} />
+        {devs.map(dev => (
+          <Marker
+            key={dev._id}
+            coordinate={{
+              longitude: dev.location.coordinates[0],
+              latitude: dev.location.coordinates[1]
+            }}>
+            <Image style={styles.avatar} source={{ uri: dev.avatar_url }} />
 
             <Callout onPress={() => {
               navigation.navigate('Profile', {
-                github_username: 'mateuschaves'
+                github_username: dev.github_username
               });
             }}>
               <View style={styles.callout}>
-                <Text style={styles.devName}>Mateus Henrique</Text>
-                <Text style={styles.devBio}>Estudante de Sistemas de Informação, desenvolvedor em um projeto da Polícia Civil e simpatizante de programação orientada a ilusões</Text>
-                <Text style={styles.devTechs}>React Native, ReactJS, Node.js</Text>
+                <Text style={styles.devName}> {dev.name} </Text>
+                <Text style={styles.devBio}>{dev.bio}</Text>
+                <Text style={styles.devTechs}>{dev.techs.join(', ')}</Text>
               </View>
             </Callout>
-          </Marker>}
+          </Marker>
+        ))
+        }
       </MapView>
 
       <View style={styles.searchForm}>
@@ -88,9 +116,11 @@ export default function Main({ navigation }) {
           placeholderTextColor="#999"
           autoCapitalize="words"
           autoCorrect={false}
+          value={techs}
+          onChangeText={e => setTechs(e)}
         />
 
-        <TouchableOpacity onPress={() => { }} style={styles.loadButton}>
+        <TouchableOpacity onPress={() => loadDevs()} style={styles.loadButton}>
           <MaterialIcons name="my-location" size={20} color="#FFF" />
         </TouchableOpacity>
       </View>
