@@ -30,3 +30,8 @@ $ react-native run-android
 $ react-native run-ios
 ```
 
+## Related projects
+
+- [Front end - ReactJS](https://github.com/mateuschaves/DevRadarWEB)
+- [Back end - NodeJS](https://github.com/mateuschaves/dev-radar-api)
+
