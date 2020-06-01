@@ -1,4 +1,4 @@
-#  Dev radar
+#  Dev radar App
 :iphone:  Find programmers with the chosen stack near you
 
 <p float="left">
