@@ -83,6 +83,7 @@ export default function Main({ navigation }) {
         style={styles.map}
         initialRegion={currentRegion}
         onRegionChangeComplete={handleRegionChanged}
+        showsUserLocation
       >
         {devs.map(dev => (
           <Marker
