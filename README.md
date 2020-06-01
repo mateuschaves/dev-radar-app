@@ -1,6 +1,12 @@
 # Dev radar
 Find programmers with the chosen stack near you
 
+<p float="left">
+  <img src="https://i.ibb.co/fx3F85N/Screenshot-20200601-152146-Dev-Radar-APP.jpg" width="250" height="500"/>
+  <img src="https://i.ibb.co/6bnhVNf/Screenshot-20200601-152127-Dev-Radar-APP.jpg" width="250" height="500"/>
+  <img src="https://i.ibb.co/61WzBdm/Screenshot-20200601-143834-Dev-Radar-APP.jpg" width="250" height="500" />
+</p>
+
 # Installation
 
 ```bash
