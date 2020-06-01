@@ -17,7 +17,7 @@ $ npm install
 
 :white_check_mark: React Native\
 :white_check_mark: react-native-maps\
-:white_check_mark: styled-components
+:white_check_mark: styled-components\
 :white_check_mark: react-native-webview
 
 ## Running the app
